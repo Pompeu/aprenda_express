@@ -23,10 +23,17 @@ const createUserController = (req, res) => {
     .catch((err) => res.status(500).json({ erros: [err.message] }));
 };
 
+const getUserController = (req, res) => {
+  return User.findOne({ _id: req.params.id })
+    .then((user) => res.status(200).json(user))
+    .catch((err) => res.status(500).json({ erros: [err.message] }));
+};
+
 //middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.post("/api/user", createUserController);
+app.get("/api/user/:id", getUserController);
 
 app.listen(3000);
