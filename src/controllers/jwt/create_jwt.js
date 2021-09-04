@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
-const User = require("../../models/user");
+const jwt = require('jsonwebtoken')
+const User = require('../../models/user')
 
-const secret = "secret";
+const secret = 'secret'
 
 const createJwtController = (req, res) => {
   return User.findOne({ email: req.body.email })
@@ -12,15 +12,15 @@ const createJwtController = (req, res) => {
           secret,
           (err, token) => {
             if (!err) {
-              res.status(201).json(token);
+              res.status(201).json(token)
             }
-            throw err;
+            throw err
           }
-        );
+        )
       }
-      throw new Error("falha ao logar");
+      throw new Error('falha ao logar')
     })
-    .catch((err) => res.status(401).json(err.message));
-};
+    .catch((err) => res.status(401).json(err.message))
+}
 
-module.exports = createJwtController;
+module.exports = createJwtController
