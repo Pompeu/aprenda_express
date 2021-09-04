@@ -5,6 +5,8 @@ const {
   createUserController,
   updateUserController,
   getUserController,
+  removeUserController,
+  getAllUserController,
 } = require("./src/controllers/users/index");
 
 const createJwtController = require("./src/controllers/jwt/create_jwt");
@@ -19,6 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 app.post("/api/user", createUserController);
 app.put("/api/user/:id", jwtCheck, updateUserController);
 app.get("/api/user/:id", getUserController);
+app.get("/api/user", getAllUserController);
+app.delete("/api/user/:id", removeUserController);
 
 app.post("/api/jwt", createJwtController);
 
