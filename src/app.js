@@ -1,16 +1,16 @@
 const express = require("express");
 const app = express();
-const connectDb = require("./src/settings/connect");
+const connectDb = require("./settings/connect");
 const {
   createUserController,
   updateUserController,
   getUserController,
   removeUserController,
   getAllUserController,
-} = require("./src/controllers/users/index");
+} = require("./controllers/users/index");
 
-const createJwtController = require("./src/controllers/jwt/create_jwt");
-const jwtCheck = require("./src/middleware/jwt_check");
+const createJwtController = require("./controllers/jwt/create_jwt");
+const jwtCheck = require("./middleware/jwt_check");
 connectDb();
 
 //middlewares
@@ -26,4 +26,4 @@ app.delete("/api/user/:id", removeUserController);
 
 app.post("/api/jwt", createJwtController);
 
-app.listen(3000);
+module.exports = app;
