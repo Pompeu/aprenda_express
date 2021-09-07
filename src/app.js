@@ -13,11 +13,11 @@ const createJwtController = require("./controllers/jwt/create_jwt");
 const jwtCheck = require("./middleware/jwt_check");
 connectDb();
 
-//middlewares
+// middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//endpoints
+// endpoints
 app.post("/api/user", createUserController);
 app.put("/api/user/:id", jwtCheck, updateUserController);
 app.get("/api/user/:id", getUserController);
