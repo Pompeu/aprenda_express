@@ -4,25 +4,23 @@ const jwt = require("jsonwebtoken");
 const app = require("../../../src/app");
 const User = require("../../../src/models/user");
 
-describe("Update a user controller", () => {
+describe("Remove user controller", () => {
   beforeAll(() => User.deleteMany({}));
+
   afterAll(() => {
     mongoose.connection.close();
   });
-
   beforeEach(() => User.deleteMany({}));
 
-  describe("when send a updated body with out token", () => {
-    it("should be return an jwt error", () => {
-      const newUser = {
+  describe("when not send a jwt token", () => {
+    it("should be return 401 status", () => {
+      return User.create({
         name: "jose_2",
         email: "jose@net.com",
         password: "122345",
-      };
-      return User.create(newUser).then((user) =>
+      }).then((user) =>
         request(app)
-          .put("/api/user/" + user.id)
-          .send(user)
+          .del("/api/user/" + user.id)
           .expect("Content-Type", /json/)
           .expect(401)
           .then((res) => {
@@ -34,11 +32,8 @@ describe("Update a user controller", () => {
   });
 
   describe("when send a id and token", () => {
-    it("should be return an 202 status", (done) => {
+    it("should be return an 204 status", (done) => {
       const secret = "secret";
-      const updateUser = {
-        name: "maria",
-      };
 
       User.create({
         name: "jose_2",
@@ -47,14 +42,12 @@ describe("Update a user controller", () => {
       }).then((user) =>
         jwt.sign({ name: user.name, email: user.email }, secret, (err, token) =>
           request(app)
-            .put("/api/user/" + user.id)
-            .send(updateUser)
+            .del("/api/user/" + user.id)
             .set("token", token)
             .expect("Content-Type", /json/)
-            .expect(202)
+            .expect(204)
             .then((res) => {
               expect(err).toBeNull();
-              expect(res.body.name).toEqual(updateUser.name);
               done();
             })
         )
