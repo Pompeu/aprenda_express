@@ -8,7 +8,7 @@ const jwtCheck = (req, res, next) => {
     if (!err) {
       return next()
     }
-    return res.json({ errors: [err.message] })
+    return res.status(401).json({ errors: [err.message] })
   })
 }
 
