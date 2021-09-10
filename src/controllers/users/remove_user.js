@@ -6,10 +6,7 @@ const removeUserController = (req, res) => {
       res.set('Content-Type', 'application/json')
       return res.status(204).end()
     })
-    .catch((err) => {
-      console.log(err)
-      res.status(500).json({ erros: [err.message] })
-    })
+    .catch((err) => res.status(500).json({ erros: [err.message] }))
 }
 
 module.exports = removeUserController

@@ -6,7 +6,7 @@ const secret = 'secret'
 const createJwtController = (req, res) => {
   return User.findOne({ email: req.body.email })
     .then((user) => {
-      if (user.password === req.body.password) {
+      if (user && user.password === req.body.password) {
         return jwt.sign(
           { name: user.name, email: user.email },
           secret,

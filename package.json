@@ -23,7 +23,7 @@
     "start": "node ./src/bin/init.js",
     "prepare": "husky install",
     "lint": "./node_modules/.bin/eslint ./ --fix",
-    "test": "NODE_ENV=testing jest --verbose"
+    "test": "NODE_ENV=testing jest --coverage"
   },
   "repository": {
     "type": "git",

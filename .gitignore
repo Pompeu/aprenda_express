@@ -2,3 +2,4 @@ node_modules
 *.swp
 .pass
 globalConfig.json
+coverage
