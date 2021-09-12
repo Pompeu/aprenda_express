@@ -25,7 +25,7 @@ describe('Create a user controller', () => {
         .then((res) => {
           expect(res.body.name).toEqual(user.name)
           expect(res.body.email).toEqual(user.email)
-          expect(res.body.password).toEqual(user.password)
+          expect(res.body.password.length).toEqual(60)
           expect(res.body._id).toBeDefined()
         })
     })

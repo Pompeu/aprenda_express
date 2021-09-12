@@ -10,11 +10,13 @@ describe('Create jwt token controller', () => {
 
   describe('when send an user', () => {
     it('should be return an token', (done) => {
-      User.create({
+      const user = {
         name: 'jose',
         email: 'jose@net.com',
         password: '555555'
-      }).then((user) => {
+      }
+
+      User.create(user).then(() => {
         return request(app)
           .post('/api/jwt')
           .send({ email: user.email, password: user.password })
