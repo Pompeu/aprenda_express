@@ -3,3 +3,5 @@ node_modules
 .pass
 globalConfig.json
 coverage
+*.js~
+*.jz~
