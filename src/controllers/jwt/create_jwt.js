@@ -4,29 +4,24 @@ const User = require('../../models/user')
 const secret = 'secret'
 
 const createJwtController = (req, res) => {
-  return User.findOne({ email: req.body.email })
-    .then((user) => {
-      if (user) {
-        return user.comparePassword(req.body.password).then((validPassword) => {
-          if (validPassword) {
-            return jwt.sign(
-              { name: user.name, email: user.email },
-              secret,
-              (err, token) => {
-                if (!err) {
-                  res.status(201).json(token)
-                }
-                throw err
-              }
-            )
+  return User.comparePassword(req.body)
+    .then((response) => {
+      if (response.valid) {
+        return jwt.sign(
+          { name: response.user.name, email: response.user.email },
+          secret,
+          (err, token) => {
+            if (!err) {
+              res.status(201).json(token)
+            }
+            throw err
           }
-
-          throw new Error('falha ao logar')
-        })
+        )
       }
 
       throw new Error('falha ao logar')
     })
+
     .catch((err) => res.status(401).json(err.message))
 }
 

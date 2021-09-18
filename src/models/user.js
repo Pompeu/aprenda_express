@@ -20,8 +20,19 @@ UserSchema.pre('save', function (next) {
     .catch(next)
 })
 
-UserSchema.methods.comparePassword = function (password) {
-  return bcrypt.compare(password, this.password)
+UserSchema.statics.comparePassword = function (body) {
+  return this.findOne({ email: body.email })
+    .then((user) =>
+      bcrypt.compare(body.password, user.password).then((validHash) => {
+        if (validHash) {
+          return {
+            valid: validHash,
+            user
+          }
+        }
+      })
+    )
+    .catch(() => false)
 }
 
 module.exports = mongoose.model('User', UserSchema)
