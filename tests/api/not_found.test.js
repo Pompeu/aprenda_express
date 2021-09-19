@@ -4,6 +4,7 @@ const app = require('../../src/app')
 
 describe('Check not found response', () => {
   afterAll(() => mongoose.connection.close())
+
   describe('when try get not exist end point', () => {
     it('should be return json with error 404', () => {
       return request(app)
